@@ -1,29 +1,53 @@
 import { useState } from 'react';
 import { complaint_log_backend } from 'declarations/complaint_log_backend';
+import Card from './Card';
+import ComplainForm from './Form';
+import './global.css';
 
 function App() {
   const [greeting, setGreeting] = useState('');
+  const [complaintCount, setComplainCount] = useState(0);
+  const [cards, setCards] = useState([]);
+
+  function updateCards() {
+      getData();
+  }
+
+  function getData() {
+    complaint_log_backend.getData().then((data) => {
+      var tmp = [];
+      for (var i=0; i<complaintCount; i++) {
+        tmp.push([data[0][i], data[1][i]]);
+      }
+      setCards(tmp);
+    });
+  }
+
+  function updateComplaintCount() {
+    complaint_log_backend.getComplaintCount().then((count) => {
+      setComplainCount(parseInt(count));
+    });
+
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
-    const name = event.target.elements.name.value;
-    complaint_log_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
-    return false;
+    updateCards();
   }
+
+
+  updateComplaintCount();
+  // updateCards();
 
   return (
     <main>
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
+      <ComplainForm />
       <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
+        <button type="submit">Refresh</button>
       </form>
-      <section id="greeting">{greeting}</section>
+      <div>
+        {cards.map((data) => <Card title={data[0]} description={data[1]}/>)}
+      </div>
     </main>
   );
 }
