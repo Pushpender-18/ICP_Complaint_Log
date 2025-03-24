@@ -41,13 +41,17 @@ function App() {
 
   return (
     <main>
-      <ComplainForm />
-      <form action="#" onSubmit={handleSubmit}>
-        <button type="submit">Refresh</button>
-      </form>
-      <div>
-        {cards.map((data) => <Card title={data[0]} description={data[1]}/>)}
-      </div>
+      <section id="complain">
+        <ComplainForm />
+        <form action="#" onSubmit={handleSubmit}>
+          <button type="submit" className='refresh'>Refresh</button>
+        </form>
+      </section>
+      <section id="complain-card">
+        <div className='card-holder'>
+          {cards.map((data) => <Card title={data[0]} description={data[1]}/>)}
+        </div>
+      </section>
     </main>
   );
 }

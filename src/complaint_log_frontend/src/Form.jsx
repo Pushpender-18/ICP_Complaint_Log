@@ -17,13 +17,18 @@ function ComplainForm() {
 		}
 	}
 
-	return (<form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Title &nbsp;</label>
-        <input id="title" alt="Title" type="text" />
-        <label htmlFor="name">Description &nbsp;</label>
-		<input id="desc" alt="Description" type="textbox" />
-        <button type="submit">Submit</button>
-    </form>);
+	return (
+		<div className="form-class">
+			<form action="#" onSubmit={handleSubmit}>
+				<div className='data-field'>
+					<input id="title" alt="Title" type="text" placeholder='Title' />
+					<textarea id="desc" placeholder='Description'></textarea>
+					{/* <input id="desc" alt="Description" type="textbox" placeholder='Description'/> */}
+				</div>
+				<button type="submit" className='submit'>Submit</button>
+			</form>
+		</div>
+	);
 }
 
 export default ComplainForm;
